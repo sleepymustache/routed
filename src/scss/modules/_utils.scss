@@ -1,0 +1,54 @@
+@mixin retina-background($image) {
+	$width: image-width($image);
+	$height: image-height($image);
+	background-image: image-url($image);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: $width/2 $height/2;
+	display: block;
+	height: $height/2;
+	width: $width/2;
+}
+
+@mixin retina-inline($image) {
+	@include retina-background($image);
+	background-image: inline-image($image);
+}
+
+@mixin full-width() {
+	$max-width: 2000px;
+	padding-left: $max-width;
+	margin-left: $max-width * -1;
+	padding-right: $max-width;
+	margin-right: $max-width * -1;
+}
+
+@mixin selection($foreground, $background) {
+	::-moz-selection {
+		background: $background;
+		color: $forground;
+		text-shadow: none;
+	}
+
+	::selection {
+		background: $background;
+		color: $forground;
+		text-shadow: none;
+	}
+
+	ins {
+		background-color: $background;
+		color: $forground;
+	}
+
+	mark {
+		background-color: $background;
+		color: $forground;
+		font-style: italic;
+		font-weight: bold;
+	}
+
+	a:link {
+		-webkit-tap-highlight-color: $background;
+	}
+}

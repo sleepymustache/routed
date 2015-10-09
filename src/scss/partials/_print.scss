@@ -1,0 +1,117 @@
+*, *:before {
+	display: block;
+	position: static !important;
+	float: none !important;
+	clear: both !important;
+	color: #000 !important;
+	text-indent: 0 !important;
+	background-image: none !important;
+	height: auto !important;
+	width: auto !important;
+	padding: 0 1em 1em 0 !important;
+	margin: 0 1em 1em 0 !important;
+	list-style: disc outside none !important;
+	font-size: 1em !important;
+	line-height: 1.5em !important;
+	box-shadow: none !important;
+	letter-spacing: 0.1em;
+}
+
+head, style, script, meta, title, link {
+	display: none;
+}
+
+*:before {
+	display: none !important;
+}
+
+h1 {
+	font-size: 1.5em !important;
+	font-weight: 400;
+}
+
+h2, h3, h4, h5, h5 {
+	font-size: 1.25em !important;
+	font-weight: 400;
+}
+
+a {
+	text-decoration: underline !important;
+}
+
+html, body, .wrapper, em, strong, sup, a, span {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+body {
+	margin: 2em !important;
+}
+
+em, strong, sup, a, span {
+	display: inline !important;
+}
+.button {
+	display: inline-block !important;
+	border: 1px solid $black !important;
+	padding: 1em !important;
+	background: none !important;
+	margin: 1em 0 1em !important;
+	width: 100% !important;
+}
+
+.bottom,
+.section {
+	display: none !important;
+}
+
+label {
+	font-weight: normal !important;
+}
+
+.wrapper {
+	>header {
+		display: none !important;
+	}
+}
+
+.hcp, .patient {
+	background: none !important;
+}
+
+li {
+	display: list-item !important;
+	float: none !important;
+	height: 100% !important;
+	width: 100% !important;
+	padding: 0 !important;
+}
+
+ul ul {
+	margin: 1em 0 0 2em !important;
+}
+
+blockquote {
+	margin-left: 2em !important;
+	background: none !important;
+	font-style: italic !important;
+}
+
+table, tr, td, th {
+	padding: 1em !important;
+	margin: 0 !important;
+	width: auto !important;
+}
+table, tbody {
+	padding: 0 !important;
+	display: table !important;
+}
+tbody {
+	margin: 0 !important;
+}
+tr {
+	display: table-row !important;
+}
+td, th {
+	display: table-cell !important;
+}

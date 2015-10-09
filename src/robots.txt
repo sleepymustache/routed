@@ -1,0 +1,13 @@
+
+# default setting: allow all robots/spiders to scan everything:
+User-agent: *
+
+# Teamsite stuff
+Disallow: /config/
+Disallow: /scripts/
+Disallow: /searchreporting/
+Disallow: /static/
+Disallow: /templatedata/
+Disallow: /local/
+Disallow: /meta/
+Disallow: /app/

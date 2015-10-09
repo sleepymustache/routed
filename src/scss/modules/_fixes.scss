@@ -1,0 +1,14 @@
+// Fix box model
+*,
+*:before,
+*:after {
+	@include box-sizing(border-box);
+}
+
+// Persistant scrollbar and mobile text sizing fix
+html {
+	overflow-y: scroll;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-webkit-text-size-adjust: none;
+}
