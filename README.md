@@ -5,7 +5,7 @@ sleepyMUSTACHE is a modular PHP micro framework designed to provide solutions fo
 
 Getting Started
 -------------------------------------------------------------------------------
-sleepyMUSTACHE is ready to go out of the box. Configuration is done in the *settings.php* file. There you can define your dev/stage/live environments and debugging preferences.
+sleepyMUSTACHE is ready to go out of the box. Configuration is done in the *src/settings.php* file. There you can define your dev/stage/live environments and debugging preferences.
 
 Whats included?
 -------------------------------------------------------------------------------
@@ -26,19 +26,19 @@ We have included a python script (sleepy.py) to assist in installing modules. It
 
 You can get a list of available modules:
 
-	sleepy --list
+	sleepy.py --list
 
 You can install modules:
 
-	sleepy --add Performance
+	sleepy.py --add Performance
 
 You can search for modules:
 
-	sleepy --search DB
+	sleepy.py --search DB
 
 You can get more info about a module:
 
-	sleepyu --help Performance
+	sleepy.py --help Performance
 
 Learning More
 -------------------------------------------------------------------------------
