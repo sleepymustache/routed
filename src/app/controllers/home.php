@@ -13,12 +13,13 @@
 			$view = "app/views/{$controller}-{$action}.php";
 
 			if (file_exists($view)) {
-				$page = new \Sleepy\Template('global');
+				$page = new \Sleepy\Template('homepage');
 				$page->bind('id', $id);
 				require_once($view);
 				$page->show();
 			} else {
 				throw new \Exception("Controller: View ($view) does not exist.");
+				echo nothere();
 			}
 		}
 
