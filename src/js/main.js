@@ -1,15 +1,9 @@
-/*global define, requirejs */
+'use strict';
 
-requirejs.config({
-	enforceDefine: true,
-	paths: {
-		jquery: [
-			'//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min',
-			'jquery-2.1.3.min'
-		]
-	}
-});
+import Sleepy from './classes/sleepy.class.js';
 
-define(['jquery', 'sleepy'], function ($, SM) {
-	'use strict';
+const SM = new Sleepy();
+
+SM.ready(() => {
+  document.getElementsByTagName('body')[0].className = (SM.isTouchDevice()) ? 'touchable' : '';
 });
