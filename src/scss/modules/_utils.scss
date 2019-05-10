@@ -1,54 +1,119 @@
+/**
+ * This is where you put in your helper mixins and classes.
+ */
+
+/* Responsive Helpers */
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 767px) {
+  .desktop-only {
+    display: initial;
+  }
+
+  li.desktop-only {
+    display: list-item;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+}
+
+@mixin background-image($image) {
+  $width: image-width($image);
+  $height: image-height($image);
+
+  background-image: image-url($image);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: $width $height;
+  display: block;
+  height: $height;
+  text-indent: -9999px;
+  width: $width;
+}
+
+@mixin background-inline($image) {
+  @include background-image($image);
+
+  background-image: inline-image($image);
+}
+
 @mixin retina-background($image) {
-	$width: image-width($image);
-	$height: image-height($image);
-	background-image: image-url($image);
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: $width/2 $height/2;
-	display: block;
-	height: $height/2;
-	width: $width/2;
+  $width: image-width($image);
+  $height: image-height($image);
+
+  background-image: image-url($image);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: ($width / 2) ($height / 2);
+  display: block;
+  height: $height / 2;
+  width: $width / 2;
 }
 
 @mixin retina-inline($image) {
-	@include retina-background($image);
-	background-image: inline-image($image);
+  @include retina-background($image);
+
+  background-image: inline-image($image);
 }
 
-@mixin full-width() {
-	$max-width: 2000px;
-	padding-left: $max-width;
-	margin-left: $max-width * -1;
-	padding-right: $max-width;
-	margin-right: $max-width * -1;
+@mixin background-sprite($image, $columns, $rows) {
+  $height: image-height($image) / $rows;
+  $width: image-width($image) / $columns;
+
+  background-image: image-url($image);
+  background-repeat: no-repeat;
+  display: block;
+  text-indent: -9999px;
+  width: $width;
+  height: $height;
 }
 
-@mixin selection($foreground, $background) {
-	::-moz-selection {
-		background: $background;
-		color: $forground;
-		text-shadow: none;
-	}
+@mixin retina-background-sprite($image, $columns, $rows) {
+  $height: image-height($image) / $rows;
+  $width: image-width($image) / $columns;
+  $bg-size-width: image-width($image) / 2;
+  $bg-size-height: image-height($image) / 2;
 
-	::selection {
-		background: $background;
-		color: $forground;
-		text-shadow: none;
-	}
+  background-image: image-url($image);
+  background-repeat: no-repeat;
+  display: block;
+  text-indent: -9999px;
+  width: $width / 2;
+  height: $height / 2;
+  background-size: $bg-size-width $bg-size-height;
+}
 
-	ins {
-		background-color: $background;
-		color: $forground;
-	}
+@mixin full-width {
+  $max-width: 2000px;
 
-	mark {
-		background-color: $background;
-		color: $forground;
-		font-style: italic;
-		font-weight: bold;
-	}
+  padding-left: $max-width;
+  margin-left: $max-width * -1;
+  padding-right: $max-width;
+  margin-right: $max-width * -1;
+}
 
-	a:link {
-		-webkit-tap-highlight-color: $background;
-	}
+@mixin colored-bullets($color) {
+  list-style: none;
+
+  li {
+    position: relative;
+
+    &:before {
+      color: $color;
+      content: '\2022';
+      display: block;
+      left: -10px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+@mixin stretched-footer($color) {
+  box-shadow: 0 50vh 0 50vh $color;
 }

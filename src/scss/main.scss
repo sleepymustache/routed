@@ -1,16 +1,12 @@
-@import 'compass';
-@include global-reset;
-
 // Modules and Variables
+$desktop-breakpoint: 767px;
+$desktop-padding: 12px;
+$desktop-base-font-size: 12px;
+
+// Load all modules
 @import 'modules/all';
 
 // Partials
-@import 'partials/typography';
 @import 'partials/structure';
+@import 'partials/forms';
 @import 'partials/navigation';
-@import 'partials/content';
-@import 'partials/page-specific';
-
-@media print {
-	@import 'partials/print';
-}

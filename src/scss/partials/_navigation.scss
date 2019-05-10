@@ -1,55 +1,72 @@
-/* Navigation Styling */
+/**
+ * This page contains the default navigation menu styling
+ */
 nav {
-	ul {
-		border-left: 1px solid #000;
-		list-style: none;
-		padding: 0;
+  ul {
+    border-left: 1px solid $black;
+    list-style: none;
+    padding: 0;
 
-		li {
-			display: inline-block;
+    li {
+      display: inline-block;
 
-			a {
-				background: #fff;
-				border-left: none;
-				border: 1px solid #000;
-				color: #000;
-				display: block;
-				font-size: 16px;
-				padding: 8px 24px;
-				text-align: center;
-				text-decoration: none;
-				width: 150px;
-			}
-		}
+      a {
+        background: $white;
+        border: 1px solid $black;
+        border-left: 0;
+        color: $black;
+        display: block;
+        padding: 8px 24px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        width: 150px;
 
-		ul {
-			display: none;
-			margin: 0 0 0 -1px;
-			position: absolute;
+        &:hover {
+          background: $nav-hover-color;
+          color: $white;
+        }
+      }
+    }
 
-			li {
-				clear: both;
-				float: left;
+    > ul li:hover > ul {
+      display: block;
+    }
 
-				a {
-					margin-top: -1px;
-					min-width: 304px;
-					text-align: left;
-				}
-			}
+    ul {
+      display: none;
+      margin: 0 0 0 -1px;
+      position: absolute;
 
-			ul {
-				left: 100%;
-				top: -1px;
-			}
-		}
-	}
+      li {
+        clear: both;
+        float: left;
 
-	> ul {
-		font-size: 0;
+        a {
+          margin-top: -1px;
+          min-width: 304px;
+          text-align: left;
+        }
+      }
 
-		li:hover > ul {
-			display: block;
-		}
-	}
-} 
+      ul {
+        left: 100%;
+        top: -1px;
+      }
+    }
+  }
+}
+
+@media (max-width: $desktop-breakpoint) {
+  nav {
+    ul {
+      li {
+        width: 100%;
+
+        a {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,29 +1,63 @@
-$margin-size: 30px;
+/**
+ * This file contains the structure of the site. These styles build the basic
+ * wire-frame of the site. Specific components such as slide-shows, accordions,
+ * etc. should have their own partial.
+ */
 
-html {
-	min-height: 100%;
-	overflow-y: scroll;
+* {
+  color: $black;
+  font-family: 'Fira Sans', sans-serif;
 }
 
-.wrapper {
-	margin: 0 auto;
-	padding: $margin-size $margin-size 0;
-	position: relative;
-	width: 1024px;
+%full-width {
+  padding-left: calc((100% - 960px) / 2);
+  padding-right: calc((100% - 960px) / 2);
 }
- 
-@media (min-width: 1024px) {
-	html {
-		overflow-x: hidden;
-	}
 
-	.wrapper {
-		> header {
-			@include full-width();
-		}
+a {
+  color: $body-link-color;
+}
 
-		> footer {
-			@include full-width();
-		}
-	}
+body {
+  > header {
+    @extend %full-width;
+
+    background-color: $header-background-color;
+    padding-bottom: $desktop-padding;
+
+    h1 {
+      color: $header-text-color;
+      font-size: $desktop-base-font-size * 4;
+      margin: 0 0 $desktop-padding;
+
+      span {
+        color: $header-text-color;
+      }
+    }
+  }
+
+  > main {
+    @extend %full-width;
+
+    display: block;
+    padding-bottom: $desktop-padding;
+    padding-top: $desktop-padding;
+
+    p {
+      line-height: $desktop-base-font-size * 2;
+    }
+  }
+
+  > footer {
+    @extend %full-width;
+
+    @include stretched-footer($footer-background-color);
+
+    background-color: $footer-background-color;
+
+    p {
+      color: $footer-text-color;
+      padding-top: $desktop-padding;
+    }
+  }
 }
