@@ -1,0 +1,5 @@
+src/js/vendor/*
+src/app/tests/simpletest/*
+dist/js/vendor/*
+dist/app/tests/simpletest/*
+node_modules/*
