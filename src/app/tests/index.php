@@ -6,15 +6,14 @@
 	 * testing suite.
 	 */
 
-	include_once('../core/class.debug.php');
-	include_once('../core/class.sm.php');
 
-	if (!include_once('../core/settings.php')) {
-		header('Location: ../setup/');
-		die();
-	}
-
+	require_once('../core/class.debug.php');
+	require_once('../core/class.sm.php');
+	require_once('smreporter.php');
+	require_once('simpletest/simpletest.php');
+	SimpleTest::prefer(new SMReporter());
 	require_once(dirname(__FILE__) . '/simpletest/autorun.php');
+
 
 	class AllTests extends TestSuite {
 		function __construct() {
@@ -24,7 +23,7 @@
 				'../modules'
 			);
 
-			$all = "";
+			$all = '';
 
 			// get all subdirectories
 			foreach ($directories as $directory) {

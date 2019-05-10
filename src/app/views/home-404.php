@@ -5,6 +5,7 @@
 	$page->bind('keywords', '');
 
 	// Content
+	$page->bind('header', 'sleepy<span>MUSTACHE</span>');
 	$page->bindStart();
 ?>
 	<h1>Page not found</h1>

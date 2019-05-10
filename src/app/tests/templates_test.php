@@ -9,7 +9,7 @@
 		// trim whitespace
 		function testBind() {
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('bind');
 			$t->bind('   naMe ', 'Sleepy Mustache!');
 			ob_start();
@@ -18,10 +18,29 @@
 			$this->assertEqual($name, 'Sleepy Mustache!');
 		}
 
+		/**
+		 * bind multiple placeholders with an array
+		 *
+		 * @return void
+		 */
+		function testArrayBind() {
+			$t = new \Sleepy\Template();
+			$t->directory = './templates/';
+			$t->setTemplate('bind');
+			$t->bind(array(
+				'fake' => 'Framework: ',
+				'name' => 'Sleepy Mustache!'
+			));
+			ob_start();
+			$t->show();
+			$name = ob_get_clean();
+			$this->assertEqual($name, 'Framework: Sleepy Mustache!');
+		}
+
 		// bind large chunks w/ bindStart/bindEnd
 		function testBindChunk() {
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('bind');
 			$t->bindStart();
 			?>
@@ -31,20 +50,20 @@
 			ob_start();
 			$t->show();
 			$name = ob_get_clean();
-			$this->assertEqual(trim($name), "Sleepy Mustache!");
+			$this->assertEqual(trim($name), 'Sleepy Mustache!');
 		}
 		// Test placeholder hooks
 		function testPlaceholderHooks() {
 			// function to run if filter works
 			function render_placeholder_filter($x) {
-				return $x . "!";
+				return $x . '!';
 			}
 
 			\Sleepy\Hook::applyFilter('render_placeholder_name', 'render_placeholder_filter');
 
 			// lets capture what the \Sleepy\Template
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('bind');
 			$t->bind('   naMe ', 'Sleepy Mustache!');
 			ob_start();
@@ -72,7 +91,7 @@
 					}
 				}
 
-				return implode($colors, " ");
+				return implode($colors, ' ');
 			}
 
 			\Sleepy\Hook::applyFilter('render_placeholder_colorof', 'render_placeholder_parameter');
@@ -92,7 +111,7 @@
 		// Test #each placeholder
 		function testEach() {
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('each');
 			$t->bind('poem', array(
 				array(
@@ -112,27 +131,28 @@
 			ob_start();
 			$t->show();
 			$poem = ob_get_clean();
-			$this->assertPattern("/1. Roses are red(.*)?2. Violets are blue/is", $poem);
+			$this->assertPattern('/1. Roses are red(.*)?2. Violets are blue/is', $poem);
 		}
 
 		// Test #include placeholder
 		// Test hooks inside of included \Sleepy\Templates
 		function testInclude() {
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('include');
 			$t->bind('   naMe ', 'Sleepy Mustache!');
 			ob_start();
 			$t->show();
 			$name = ob_get_clean();
+
 			// The double !! is because the hook above...
-			$this->assertEqual($name, 'Sleepy Mustache!!');
+			$this->assertEqual($name, "<h1>Header</h1>\r\nSleepy Mustache!!");
 		}
 
 		// Test inline placeholders
 		function testTwoInline() {
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('two-inline');
 			$t->bind('firstname', 'Jaime');
 			$t->bind('lastname', 'Rodriguez');
@@ -145,18 +165,18 @@
 
 		// Test if \Sleepy\Template doesn't exist
 		function testTemplateMissing() {
-			$this->expectException(new Exception("Template './templates/missing.tpl' does not exist."));
+			$this->expectException(new Exception('Template \'./templates/missing.tpl\' does not exist.'));
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('missing');
 			$t->show();
 		}
 
 		// Test in #include doesn't exist
 		function testIncludeMissing() {
-			$this->expectException(new Exception("Template './templates/binding.tpl' does not exist."));
+			$this->expectException(new Exception('Template \'./templates/binding.tpl\' does not exist.'));
 			$t = new \Sleepy\Template();
-			$t->directory = "./templates/";
+			$t->directory = './templates/';
 			$t->setTemplate('binding');
 			$t->show();
 		}
