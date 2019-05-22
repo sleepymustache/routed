@@ -1,3 +1,3 @@
 {{ #include header }}
-	{{ content }}
+  {{ content }}
 {{ #include footer }}
