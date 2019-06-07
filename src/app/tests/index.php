@@ -7,12 +7,14 @@
    */
 
 
-  require_once('../core/class.debug.php');
-  require_once('../core/class.sm.php');
-  require_once('smreporter.php');
-  require_once('simpletest/simpletest.php');
+  require_once(__DIR__ . '/../core/class.debug.php');
+  require_once(__DIR__ . '/../core/class.sm.php');
+  require_once(__DIR__ . '/smreporter.php');
+  require_once(__DIR__ . '/simpletest/simpletest.php');
+  
   SimpleTest::prefer(new SMReporter());
-  require_once(dirname(__FILE__) . '/simpletest/autorun.php');
+  
+  require_once(__DIR__ . '/simpletest/autorun.php');
 
 
   class AllTests extends TestSuite {
