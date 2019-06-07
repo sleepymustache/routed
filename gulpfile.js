@@ -88,9 +88,9 @@ gulp.task('default', [
     proxy: devUrl,
     notify: false
   });
-  });
+});
 
-  /**
+/**
  * Runs by default
  */
 gulp.task('build', [
@@ -191,9 +191,9 @@ gulp.task('zip', ['copy', 'images', 'styles', 'scripts'], () => {
 
   gulp.src('dist/**/*')
     .pipe(zip(
-      today.getFullYear().toString() + "-" +
-      today.getMonth().toString() + "-" +
-      today.getDay().toString() + "_" +
+      today.getFullYear().toString() + '-' +
+      today.getMonth().toString() + '-' +
+      today.getDay().toString() + '_' +
       today.getHours().toString() +
       today.getMinutes().toString() +
       '-dist.zip'
