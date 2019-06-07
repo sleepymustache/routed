@@ -1,6 +1,8 @@
 sleepyMUSTACHE - Routed Setup
 ===============================================================================
 
+[![Build Status](https://travis-ci.org/sleepymustache/routed.svg?branch=master)](https://travis-ci.org/sleepymustache/routed)
+
 sleepyMUSTACHE is a modular PHP micro framework designed to provide solutions
 for everyday PHP challenges. This routed edition is aimed at providing a
 scaffolding for a project that uses the frameworks router
