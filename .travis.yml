@@ -40,11 +40,14 @@ install:
   # Install drush globally
   #- composer global require drush/drush:$DRUSH_VERSION
   #- composer global require drupal/coder:$CODER_VERSION
-
-before_script:
   - npm install
   - npm install -g gulp
   - gulp build
+
+before_script:
+  #- npm install
+  #- npm install -g gulp
+  #- gulp build
 
 script:
   # PHP lint
@@ -52,6 +55,6 @@ script:
     echo;
     echo "Running PHP lint";
     find . -name \*.php ! -path "./vendor/*" ! -name "test_with_parse_error.php" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
-  - nohup php -S localhost:8080 -t dist > php-server.log 2>&1 &
+  - php -S localhost:8080 -t dist > php-server.log 2>&1 &
   - php dist/app/tests/index.php
   - cat php-server.log
