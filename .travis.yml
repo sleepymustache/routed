@@ -5,6 +5,7 @@ addons:
   apt:
     packages:
       - parallel
+      - php-dom
 
 php:
   - 7
