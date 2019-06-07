@@ -45,6 +45,7 @@ install:
   - gulp build
 
 before_script:
+  - ls
   #- npm install
   #- npm install -g gulp
   #- gulp build
@@ -55,6 +56,6 @@ script:
     echo;
     echo "Running PHP lint";
     find . -name \*.php ! -path "./vendor/*" ! -name "test_with_parse_error.php" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
-  - php -S localhost:8080 -t dist > php-server.log 2>&1 &
-  - php dist/app/tests/index.php
+  - php -S localhost:8080 -t ~/build/sleepymustache/routed/dist > php-server.log 2>&1 &
+  - php ~/build/sleepymustache/routed/dist/app/tests/index.php
   - cat php-server.log
