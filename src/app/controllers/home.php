@@ -1,10 +1,11 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sleepy/bootstrap.php';
 
-use \Sleepy\MVC\Controller;
-use \Sleepy\MVC\Model;
-use \Sleepy\MVC\Route;
-use \Sleepy\MVC\View;
+use Sleepy\MVC\Controller;
+use Sleepy\MVC\Model;
+use Sleepy\MVC\Route;
+use Sleepy\MVC\View;
+use Sleepy\Core\SM;
 
 /**
  * The default controller
@@ -90,7 +91,7 @@ class Home extends Controller {
     $model->title = "SleepyMUSTACHE - Error";
 
     // Only show errors in the Live environment
-    if (\Sleepy\SM::isLive()) {
+    if (SM::isLive()) {
       $model->error = $route->params['error']->getMessage();
     }
 
