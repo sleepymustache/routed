@@ -1,13 +1,10 @@
 <?php
-require_once(__DIR__ . "/../core/sleepy.php");
-require_once(__DIR__ . "/../core/class.controller.php");
-require_once(__DIR__ . "/../core/class.model.php");
-require_once(__DIR__ . "/../core/class.view.php");
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sleepy/bootstrap.php';
 
-use \Sleepy\Controller;
-use \Sleepy\Model;
-use \Sleepy\Route;
-use \Sleepy\View;
+use \Sleepy\MVC\Controller;
+use \Sleepy\MVC\Model;
+use \Sleepy\MVC\Route;
+use \Sleepy\MVC\View;
 
 /**
  * The default controller
@@ -17,12 +14,11 @@ class Home extends Controller {
    * Loads the view based on controller-action.php pattern
    */
   public function index(Route $route) : View {
-
     // Getting route info
     $controller = $route->params['controller'];
-    $action = $route->params['action'];
-    $id = $route->params['id'];
-    $view = "{$controller}-{$action}";
+    $action     = $route->params['action'];
+    $id         = $route->params['id'];
+    $view       = "{$controller}-{$action}";
 
     // Create a model to pass to the view
     $model = new Model();
