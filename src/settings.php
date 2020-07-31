@@ -81,10 +81,10 @@ if (SM::isStage()) {
     define('DIRBASE', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'app');
 
     // DB Credentials
-    define("DBHOST", '');
-    define("DBUSER", '');
-    define("DBPASS", '');
-    define("DBNAME", '');
+    define("DBHOST", 'db');
+    define("DBUSER", 'sleepy');
+    define("DBPASS", 'sleepy');
+    define("DBNAME", 'sleepy');
 
     // Email information
     define('EMAIL_FROM', '');
