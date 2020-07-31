@@ -15,9 +15,9 @@ module.exports = {
    * We enable source maps, but do not reference it in the bundle to save space
    *
    * Prod: none
-   * Dev:  hidden-source-map
+   * Dev:  source-map
    */
-  devtool: 'none',
+  devtool: 'source-map',
 
   /**
    * The name of the bundle
