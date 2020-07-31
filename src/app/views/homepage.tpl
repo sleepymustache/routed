@@ -1,4 +1,4 @@
-{{ #include header }}
+{{ #include components/header }}
   {{ #each entry in teasers }}
     <article>
       <header>
@@ -16,4 +16,4 @@
       </footer>
     </article>
   {{ /each }}
-{{ #include footer }}
+{{ #include components/footer }}

@@ -21,51 +21,9 @@ class Home extends Controller {
     $id         = $route->params['id'];
     $view       = "{$controller}-{$action}";
 
-    // Create a model to pass to the view
-    $model = new Model();
-    $model->title = "SleepyMUSTACHE - Home page";
-    $model->description = "The model is passed into the View and can be accessed using \$model";
-    $model->keywords = "blog, sleepy mustache, framework";
-    $model->header = "sleepy<span>MUSTACHE</span>";
-    $model->teasers = array(
-      array(
-        "title" => "Getting Started",
-        "link" => 'http://www.sleepymustache.com/',
-        "author" => "Jaime A. Rodriguez",
-        "date" => date('m/d/Y', time()),
-        "description" => "
-          Congratulations on successfully installing sleepyMUSTACHE! You can visit the <a href=\"http://www.sleepymustache.com/documentation/index.html\">documentation page</a> to learn more or hit the ground running by viewing the <a href=\"http://www.sleepymustache.com/#getting-started\">getting started</a> section.",
-        "tags" => array(
-          array(
-            'name' => "Configuration",
-            'link' => "http://www.sleepymustache.com/#getting-started"
-          )
-        )
-      ), array(
-        "title" => "Sample Modules",
-        "link" => "#",
-        "author" => "Jaime A. Rodriguez",
-        "date" => date('m/d/Y', time() - 30 * 24 * 60 * 60),
-        "description" => "
-          By default there are 2 sample modules included with the
-          framework. These modules demonstrate how to create your own
-          modules, and implement existing functionality. You may safely
-          delete them.",
-        "tags" => array(
-          array(
-            'name' => "modules",
-            'link' => "http://www.sleepymustache.com/#default-modules"
-          ),
-          array(
-            'name' => "fixes",
-            'link' => "https://github.com/jaimerod/sleepy-mustache/commits/master"
-          )
-        )
-      )
-    );
-
-    // Render the page using the homepage template and the $model
-    return new View($model, "homepage"); 
+    // Render the page using the homepage template and the content stored 
+    // inside of the Homepage Model
+    return new View(new \Model\Homepage(), "homepage"); 
   }
 
   /**
@@ -74,11 +32,12 @@ class Home extends Controller {
   public function pageNotFound(Route $route) : View {
     http_response_code(404);
 
-    $model = new Model();
-    $model->title = "SleepyMUSTACHE - Page Not Found";
-    $model->error = "Page Not Found";
-
-    return new View($model, '404');
+    // You can define models using this shorthand
+    return new View(new Model([
+      'title'  => "SleepyMUSTACHE - Page not found",
+      'header' => "We've looked high and low",
+      'error'  => "We're unable to locate the page you requested. Please try again later/"
+    ]), 'error');
   }
 
   /**
@@ -87,11 +46,15 @@ class Home extends Controller {
   public function error(Route $route) : View {
     http_response_code(500);
 
+    // This way is pretty flexible
     $model = new Model();
     $model->title = "SleepyMUSTACHE - Error";
+    $model->header = "Something is broken...";
 
     // Only show errors in the Live environment
     if (SM::isLive()) {
+      $model->error = "The website encounted and error. Please try again later.";
+    } else {
       $model->error = $route->params['error']->getMessage();
     }
 
