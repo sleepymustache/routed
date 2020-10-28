@@ -1,6 +1,8 @@
-  </main>
+</main>
   <footer>
-    <p>Copyright &copy; <?= date('Y', time()) ?> SleepyMUSTACHE</p>
+    <div class="wrapper">
+      <p>Copyright &copy; <?= date('Y', time()) ?> SleepyMUSTACHE</p>
+    </div>
   </footer>
 </body>
 </html>
