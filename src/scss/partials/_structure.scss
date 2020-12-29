@@ -6,7 +6,7 @@
 
 * {
   color: $black;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 a {
@@ -24,18 +24,6 @@ body {
 
   > header {
     @include make-container();
-    background-color: $header-background-color;
-    padding-top: $desktop-padding;
-
-    h1 {
-      color: $header-text-color;
-      font-size: $desktop-base-font-size * 3;
-      margin: ($desktop-padding * 2) 0 ($desktop-padding * 2);
-
-      @include breakpoint('medium') {
-        font-size: $desktop-base-font-size * 4;
-      }
-    }
   }
 
   > main {

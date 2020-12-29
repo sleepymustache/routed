@@ -41,7 +41,7 @@ $grid-columns-xlarge: 12 !default;
     @content;
   }
 }
-
+ 
 @mixin breakpoint-only($size) {
   $min: 0px;
   $max: $grid-breakpoint-small;
