@@ -101,3 +101,30 @@ if (SM::isStage()) {
     Debug::$enableLog     = false;   // Log debug info to a db
     Debug::$enableConsole = true;    // Show debug info in the console
 }
+
+// Define a sitemap for use with the Navigation Module
+define('SITEMAP', '{
+  "pages": [
+    {
+      "id": "1.0",
+      "link": "/",
+      "title": "Homepage",
+      "pages": [
+        {
+          "id": "1.1",
+          "title": "Link 1",
+          "target": "",
+          "link": "#link1"
+        }, {
+          "id": "1.2",
+          "title": "Link 2",
+          "link": "#link2"
+        }, {
+          "id": "1.3",
+          "title": "Link 3",
+          "link": "#link3"
+        }
+      ]
+    }
+  ]
+}');
