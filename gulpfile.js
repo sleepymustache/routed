@@ -8,7 +8,6 @@ const enableTests = false;              // Set to true to enable tests
 const browserSync = require('browser-sync').create();
 const eslint      = require('gulp-eslint');
 const imagemin    = require('gulp-imagemin');
-const notify      = require('gulp-notify');
 const plumber     = require('gulp-plumber');
 const sass        = require('gulp-sass');
 const sourcemaps  = require('gulp-sourcemaps');
@@ -37,10 +36,8 @@ const state = {
  * Handles errors with notifications
  */
 const handleErrors = (err) => {
-  notify.onError({
-    title:   '<%= error.name %>',
-    message: '<%= error.message %>'
-  })(err);
+  console.dir(err);
+  return false;
 };
 
 /**
@@ -56,7 +53,7 @@ const fileDeleter = (event) => {
     const destFilePath = path.resolve(buildFolder, filePathFromSrc);
     del.sync(destFilePath);
   }
-};
+}; 
 
 /**
  * Lints the source
@@ -69,10 +66,10 @@ const lint = () => {
     .pipe(plumber())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-    .on('error', notify.onError((err) => {
+    .on('error', (err) => {
       state.shouldMinify = false;
       return handleErrors(err);
-    }));
+    });
 };
 
 /**
@@ -104,11 +101,12 @@ const scripts = series(lint, (cb) => {
  */
 const styles = () => {
   return src(sassFiles)
-    .pipe(plumber({ errorHandler: handleErrors }))
+    .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(sass({
-      outputStyle: 'compressed'
-    }))
+    .pipe(sass().on('error', sass.logError))
+    // .pipe(sass({
+    //   outputStyle: 'compressed'
+    // }.on('error', sass.logError)))
     .pipe(sourcemaps.write('./', {
       includeContent: true,
       sourceRoot: './'
