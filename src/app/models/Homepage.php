@@ -4,13 +4,15 @@ namespace Model;
 use \Sleepy\MVC\Model;
 
 class Homepage extends Model {
+  use Isi;
+
   public $title = "SleepyMUSTACHE - Home page";
   public $description = "The model is passed into the View and can be accessed using \$model";
   public $keywords = "blog, sleepy mustache, framework";
   public $header =  "sleepy<span>MUSTACHE</span>";
   public $teasers = [[
     "title" => "Getting Started",
-    "image"   => "https://unsplash.com/photos/cUJc1mb3KVg/download?w=320",
+    "image"   => "http://placeholder.pics/svg/320x240",
     "link" => 'http://www.sleepymustache.com/',
     "author" => "Jaime A. Rodriguez",
     "date" => "04/11/1984",
@@ -25,7 +27,7 @@ class Homepage extends Model {
     ]]
   ], [
     "title" => "Sample Modules",
-    "image"   => "https://unsplash.com/photos/cUJc1mb3KVg/download?w=320",
+    "image"   => "http://placeholder.pics/svg/320x240",
     "link" => "#",
     "author" => "Jaime A. Rodriguez",
     "date" => "07/31/2020",

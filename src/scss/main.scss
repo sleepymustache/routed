@@ -9,4 +9,8 @@ $desktop-base-font-size: 12px;
 // Partials
 @import 'partials/structure';
 @import 'partials/forms';
+@import 'partials/header';
 @import 'partials/navigation';
+
+// From Modules
+@import '../app/modules/isi/scss/isi'; 

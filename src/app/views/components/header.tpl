@@ -19,11 +19,11 @@
   <script async src="/js/main.bundle.js"></script>
 
   <!-- FAVICON -->
-  <link rel="apple-touch-icon" href="/favicon.png">
-  <link rel="icon" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/images/icons/favicon-96x96.png">
+  <link rel="icon" href="/images/icons/favicon.ico">
   <!--[if IE]><link rel="shortcut icon" href="/favicon.ico"><![endif]-->
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/favicon.png">
+  <meta name="msapplication-TileImage" content="/images/icons/favicon-96x96.png">
 </head>
 <body>
   <header>
@@ -31,7 +31,7 @@
       {{ #include components/top-menu }}
       <h1>{{ header }}</h1>
     </div>
+    {{ #include components/main-menu }}
   </header>
-  {{ #include components/main-menu }}
   <main>
     <div class="wrapper">
