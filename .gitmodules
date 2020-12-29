@@ -11,3 +11,9 @@
 [submodule "src/app/modules/navigation"]
 	path = src/app/modules/navigation
 	url = https://github.com/sleepymustache/module-navigation.git
+[submodule "src/app/modules/isi"]
+	path = src/app/modules/isi
+	url = https://github.com/sleepymustache/isi
+[submodule "src/app/modules/sitemap"]
+	path = src/app/modules/sitemap
+	url = https://github.com/sleepymustache/module-sitemap
