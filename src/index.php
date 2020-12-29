@@ -14,7 +14,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sleepy/bootstrap.php';
 
 use \Sleepy\MVC\Router;
-use \Sleepy\MVC\RouteNotFound;
+use \Sleepy\MVC\RouteNotFound; 
 
 // basic routing with defaults
 Router::mvc([
