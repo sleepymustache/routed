@@ -137,10 +137,10 @@ const copy = () => {
 };
 
 const build = series((cb) => {
-  browserSync.init({
-    proxy: devUrl,
-    notify: false
-  });
+  // browserSync.init({
+  //   proxy: devUrl,
+  //   notify: false
+  // });
 
   cb();
 }, parallel(copy, images, styles, scripts));
