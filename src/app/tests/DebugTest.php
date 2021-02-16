@@ -133,14 +133,14 @@ class DebugTest extends TestCase
      *
      * @return void
      */
-    function testDBLogging()
-    {
-        if (strlen(DBPASS) > 0) {
-            Debug::$enableShow = false;
-            Debug::$enableLog = true;
-            $this->assertTrue(Debug::out('Testing, testing, 123'));
-        } else {
-            $this->assertTrue(strlen(DBPASS) == 0);
-        }
-    }
+    // function testDBLogging()
+    // {
+    //     if (strlen(DBPASS) > 0) {
+    //         Debug::$enableShow = false;
+    //         Debug::$enableLog = true;
+    //         $this->assertTrue(Debug::out('Testing, testing, 123'));
+    //     } else {
+    //         $this->assertTrue(strlen(DBPASS) == 0);
+    //     }
+    // }
 }

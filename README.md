@@ -1,6 +1,6 @@
 # sleepyMUSTACHE 2.0 - Routed Setup
 
-[![Build Status](https://travis-ci.org/sleepymustache/routed.svg?branch=master)](https://travis-ci.org/sleepymustache/routed)
+[![Build Status](https://travis-ci.org/sleepymustache/routed.svg?branch=2.x)](https://travis-ci.org/sleepymustache/routed)
 
 sleepyMUSTACHE is a PHP micro-framework designed to provide solutions for rapidly building websites which are fast and
 secure. Our main goal is to create a framework that is enjoyable for developers to use, while giving them fine grained

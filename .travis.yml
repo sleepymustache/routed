@@ -8,16 +8,14 @@ addons:
       - php-dom
 
 php:
-  - 7
-  - 7.1
-  - 7.2
+  - 7.3
+  - 7.4
+  - 8
 
 git:
   depth: 1
 
 matrix:
-  #allow_failures:
-  #  - php: hhvm
   fast_finish: true
 
 before_install:
@@ -45,6 +43,8 @@ install:
   - gulp build
 
 before_script:
+  - wget curl -sSfL -o ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar
+  - mkdir dist/app/tests
   - cp -r src/app/tests dist/app/tests 
   #- npm install
   #- npm install -g gulp
@@ -57,5 +57,4 @@ script:
     echo "Running PHP lint";
     find . -name \*.php ! -path "./vendor/*" ! -name "test_with_parse_error.php" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
   - php -S localhost:8080 -t dist > php-server.log 2>&1 &
-  - php dist/app/tests/index.php
   - cat php-server.log
