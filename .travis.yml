@@ -43,11 +43,7 @@ install:
   - gulp build
 
 before_script:
-  - mkdir dist/app/tests
   - cp -r src/app/tests dist/app/tests 
-  #- npm install
-  #- npm install -g gulp
-  #- gulp build
 
 script:
   # PHP lint
