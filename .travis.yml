@@ -55,6 +55,4 @@ script:
   - >
     echo;
     echo "Running PHP lint";
-    find . -name \*.php ! -path "./vendor/*" ! -name "test_with_parse_error.php" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
-  - php -S localhost:8080 -t dist > php-server.log 2>&1 &
-  - cat php-server.log
+    phpunit;

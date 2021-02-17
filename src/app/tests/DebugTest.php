@@ -63,6 +63,8 @@ class DebugTest extends TestCase
      * There is only a static instance of Debug
      *
      * @return void
+     * 
+     * @covers Debug::__construct()
      */
     function testDebugHighlander()
     {
@@ -75,6 +77,8 @@ class DebugTest extends TestCase
      * Make sure debug output is wrapped in pre
      *
      * @return void
+     * 
+     * @covers Debug::out()
      */
     function testDebugShow()
     {
@@ -91,6 +95,8 @@ class DebugTest extends TestCase
      * Make sure an email is sent
      *
      * @return void
+     * 
+     * @covers Debug::out()
      */
     function testDebugEmail()
     {
@@ -105,6 +111,8 @@ class DebugTest extends TestCase
      * No output when $enabled_show is false
      *
      * @return void
+     * 
+     * @covers Debug::out()
      */
     function testDebugDoNotShow()
     {
@@ -119,6 +127,8 @@ class DebugTest extends TestCase
      * No email is sent with $enabled_send is false
      *
      * @return void
+     * 
+     * @covers Debug::out()
      */
     function testDebugDoNotEmail()
     {

@@ -87,8 +87,8 @@ if (SM::isStage()) {
     define("DBNAME", 'sleepy');
 
     // Email information
-    define('EMAIL_FROM', '');
-    define('EMAIL_TO',   '');
+    define('EMAIL_FROM', 'me@example.com');
+    define('EMAIL_TO',   'you@example.com');
     define('EMAIL_CC',   '');
     define('EMAIL_BCC',  '');
 

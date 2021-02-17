@@ -43,6 +43,8 @@ class TemplateTest extends TestCase
      * trim whitespace
      *
      * @return void
+     * 
+     * @covers Template::bind()
      */
     public function testBind()
     {
@@ -60,6 +62,8 @@ class TemplateTest extends TestCase
      * Bind multiple placeholders with an array
      *
      * @return void
+     * 
+     * @covers Template::bind()
      */
     function testArrayBind()
     {
@@ -82,6 +86,9 @@ class TemplateTest extends TestCase
      * Bind large chunks w/ bindStart/bindEnd
      *
      * @return void
+     * 
+     * @covers Template::bindStart()
+     * @covers Template::bindStop()
      */
     function testBindChunk()
     {
@@ -104,6 +111,8 @@ class TemplateTest extends TestCase
      * Test hooks inside of included Templates
      *
      * @return void
+     * 
+     * @covers Template::setTemplate()
      */
     function testInclude()
     {
@@ -122,6 +131,8 @@ class TemplateTest extends TestCase
      * Test placeholder hooks
      *
      * @return void
+     * 
+     * @covers Template::bind()
      */
     function testPlaceholderHooks()
     {
@@ -131,6 +142,8 @@ class TemplateTest extends TestCase
          * @param string $x The unfiltered content
          *
          * @return string The filtered content
+         * 
+         * @covers Template::bind()
          */
         function render_placeholder_filter($x)
         {
@@ -156,6 +169,8 @@ class TemplateTest extends TestCase
      * Test placeholder hooks w/ parameters
      *
      * @return void
+     * 
+     * @covers Template::bind()
      */
     function testPlaceholderHookParameters()
     {
@@ -165,6 +180,8 @@ class TemplateTest extends TestCase
          * @param string $x The unfiltered string
          *
          * @return string The filtered string
+         * 
+         * @covers Template::show()
          */
         function render_placeholder_parameter($x)
         {
@@ -205,6 +222,8 @@ class TemplateTest extends TestCase
      * Test #each placeholder
      *
      * @return void
+     * 
+     * @covers Template::bind()
      */
     function testEach()
     {
@@ -242,6 +261,8 @@ class TemplateTest extends TestCase
      * Test inline placeholders
      *
      * @return void
+     * 
+     * @covers Template::bind()
      */
     function testTwoInline()
     {
@@ -261,6 +282,8 @@ class TemplateTest extends TestCase
      * Test if Template doesn't exist
      *
      * @return void
+     * 
+     * @covers Template::setTemplate()
      */
     function testTempl1ateMissing()
     {
@@ -278,6 +301,8 @@ class TemplateTest extends TestCase
      * Test in #include doesn't exist
      *
      * @return void
+     * 
+     * @covers Template::setTemplate()
      */
     function testIncludeMissing()
     {

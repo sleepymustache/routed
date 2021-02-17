@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true">
-  <coverage>
-    <report>
-      <text outputFile="php://stdout" showUncoveredFiles="true"/>
-    </report>
-  </coverage>
-  <testsuites>
-    <testsuite name="SleepyMustache">
-      <directory>dist/app/tests</directory>
-    </testsuite>
-  </testsuites>
-  <logging/>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         cacheResultFile=".phpunit.cache/test-results"
+         executionOrder="depends,defects"
+         forceCoversAnnotation="true"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="default">
+            <directory suffix="Test.php">dist/app/tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage cacheDirectory=".phpunit.cache/code-coverage"
+              processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">dist/app/core</directory>
+        </include>
+    </coverage>
 </phpunit>
