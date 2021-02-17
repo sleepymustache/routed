@@ -46,8 +46,4 @@ before_script:
   - cp -r src/app/tests dist/app/tests 
 
 script:
-  # PHP lint
-  - >
-    echo;
-    echo "Running PHP lint";
-    phpunit;
+  - phpunit
