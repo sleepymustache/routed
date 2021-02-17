@@ -1,11 +1,8 @@
-language: php
-sudo: false
+dist: bionic
 
-addons:
-  apt:
-    packages:
-      - parallel
-      - php-dom
+language: php
+
+sudo: false
 
 php:
   - 7.3
