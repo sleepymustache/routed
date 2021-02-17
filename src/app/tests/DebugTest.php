@@ -97,6 +97,7 @@ class DebugTest extends TestCase
      * @return void
      * 
      * @covers Debug::out()
+     * @group no-ci
      */
     function testDebugEmail()
     {
