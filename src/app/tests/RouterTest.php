@@ -89,6 +89,8 @@ class RouterTest extends TestCase
      * Can Match Simpe Route
      *
      * @return void
+     * 
+     * @covers Router::start()
      */
     public function testCanMatchSimpleRoute() : void
     {
@@ -104,6 +106,8 @@ class RouterTest extends TestCase
      * Can match two level route
      *
      * @return void
+     * 
+     * @covers Router::start()
      */
     public function testCanMatchTwoLevelRoute() : void
     {
@@ -116,6 +120,8 @@ class RouterTest extends TestCase
      * Can match three level route
      *
      * @return void
+     * 
+     * @covers Router::start()
      */
     public function testCanMatchThreeLevelRoute() : void
     {
@@ -130,6 +136,8 @@ class RouterTest extends TestCase
      * Can match four level route
      *
      * @return void
+     * 
+     * @covers Router::start()
      */
     public function testCanMatchFourLevelRoute() : void
     {
@@ -142,6 +150,8 @@ class RouterTest extends TestCase
      * Can throw exceptions when no route is found
      *
      * @return void
+     * 
+     * @covers Router::start()
      */
     public function testCanThrowExceptionsWhenNoRouteIsFound() : void
     {
@@ -160,6 +170,9 @@ class RouterTest extends TestCase
      * Can parse placeholders
      *
      * @return void
+     * 
+     * @covers Router::route()
+     * @covers Router::start()
      */
     public function testCanParsePlaceholders() : void
     {
@@ -185,6 +198,9 @@ class RouterTest extends TestCase
      * Can change delimeters
      *
      * @return void
+     * 
+     * @covers Router::route()
+     * @covers Router::start()
      */
     public function testCanChangeDelimeters() : void
     {
@@ -207,6 +223,9 @@ class RouterTest extends TestCase
      * Can parse querystrings
      *
      * @return void
+     * 
+     * @covers Router::route()
+     * @covers Router::start()
      */
     public function testCanParseQuerystrings() : void
     {
