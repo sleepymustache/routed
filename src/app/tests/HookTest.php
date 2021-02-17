@@ -44,6 +44,7 @@ class HookTest extends TestCase
      * @return void
      * 
      * @covers Hook::doAction()
+     * @covers Hook::addAction()
      */
     public function testCanAddAction() : void
     {
@@ -74,6 +75,7 @@ class HookTest extends TestCase
      * @return void
      * 
      * @covers Hook::applyFilter()
+     * @covers Hook::addFilter()
      */
     function testCanFiltersBeAdded()
     {
