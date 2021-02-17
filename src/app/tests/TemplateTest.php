@@ -198,7 +198,7 @@ class TemplateTest extends TestCase
                 }
             }
 
-            return implode($colors, ' ');
+            return implode(' ', $colors);
         }
 
         Hook::applyFilter(
