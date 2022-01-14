@@ -219,3 +219,4 @@ aspnet_client
 node_modules
 sleepy.sublime-project
 dist
+docker/database/data

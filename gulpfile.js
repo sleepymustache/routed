@@ -1,8 +1,8 @@
 const { dest, parallel, series, src, watch } = require('gulp');
 
 // Configuration
-const devUrl = 'http://localhost:8080'; // The local development URL for BrowserSync
-const enableTests = false;               // Set to false for production
+const devUrl      = 'http://localhost:8888'; // The local development URL for BrowserSync
+const enableTests = false;                   // Set to false for production
 
 // Gulp plugins
 const browserSync = require('browser-sync').create();
@@ -53,7 +53,7 @@ const fileDeleter = (event) => {
     const destFilePath = path.resolve(buildFolder, filePathFromSrc);
     del.sync(destFilePath);
   }
-}; 
+};
 
 /**
  * Lints the source
@@ -104,9 +104,6 @@ const styles = () => {
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    // .pipe(sass({
-    //   outputStyle: 'compressed'
-    // }.on('error', sass.logError)))
     .pipe(sourcemaps.write('./', {
       includeContent: true,
       sourceRoot: './'
@@ -136,12 +133,20 @@ const copy = () => {
     .pipe(browserSync.stream());
 };
 
-const build = series((cb) => {
-  // browserSync.init({
-  //   proxy: devUrl,
-  //   notify: false
-  // });
+/**
+ * Starts up browserSync
+ */
+const sync = () => {
+  browserSync.init({
+    proxy: devUrl,
+    notify: false
+  });
+};
 
+/**
+ * Builds the app
+ */
+const build = series((cb) => {
   cb();
 }, parallel(copy, images, styles, scripts));
 
@@ -150,7 +155,7 @@ const cleanup = (cb) => { cb(); };
 /**
  * Watches for changes in files and does stuffF
  */
-const develop = parallel(build, () => {
+const develop = parallel(sync, build, () => {
   watch([jsFiles], scripts);
   watch([sassFiles], styles);
   const imageWatcher = watch([imageFiles], images);
@@ -165,6 +170,9 @@ const develop = parallel(build, () => {
   imageWatcher.on('change', fileDeleter);
 });
 
+/**
+ * Zips up the dist folder
+ */
 const packUp = series(build, () => {
   var today = new Date();
 
@@ -180,7 +188,6 @@ const packUp = series(build, () => {
     .pipe(dest('./'));
 });
 
-//if (process.env.NODE_ENV === 'production') {
 exports.cleanup = cleanup;
 exports.zip     = packUp;
 exports.develop = develop;

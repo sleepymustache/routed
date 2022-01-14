@@ -14,23 +14,29 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sleepy/bootstrap.php';
 
 use \Sleepy\MVC\Router;
-use \Sleepy\MVC\RouteNotFound; 
+use \Sleepy\MVC\RouteNotFound;
 
 // basic routing with defaults
-Router::mvc([
-  '{{ controller }}/{{ action }}/{{ id }}',
-  '{{ controller }}/{{ action }}',
-  '{{ controller }}',
-  '/'
-]);
+Router::mvc(
+    [
+        '{{ controller }}/{{ action }}/{{ id }}',
+        '{{ controller }}/{{ action }}',
+        '{{ controller }}',
+        '/'
+    ]
+);
 
 // Catch 404 or errors
 try {
-  Router::start();
+    Router::start();
 } catch (RouteNotFound $e) {
-  Router::redirect('home', 'pageNotFound');
+    Router::redirect('home', 'pageNotFound');
 } catch (Exception $e) {
-  Router::redirect('home', 'error', array(
-    'error' => $e
-  ));
+    Router::redirect(
+        'home',
+        'error',
+        [
+            'error' => $e
+        ]
+    );
 }
