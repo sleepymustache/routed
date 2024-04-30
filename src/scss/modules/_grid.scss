@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 $grid-breakpoint-xsmall: 0px !default;
 $grid-breakpoint-small:  576px !default;
 $grid-breakpoint-medium: 769px !default;
@@ -41,7 +43,7 @@ $grid-columns-xlarge: 12 !default;
     @content;
   }
 }
- 
+
 @mixin breakpoint-only($size) {
   $min: 0px;
   $max: $grid-breakpoint-small;
@@ -73,11 +75,11 @@ $grid-columns-xlarge: 12 !default;
 
 // Container
 @mixin make-container() {
-  @include breakpoint('xsmall') { $gutter: $grid-gutters-xsmall / 2;padding-right: $gutter; padding-left: $gutter; }
-  @include breakpoint('small')  { $gutter: $grid-gutters-small / 2;padding-right: $gutter; padding-left: $gutter; }
-  @include breakpoint('medium') { $gutter: $grid-gutters-medium / 2;padding-right: $gutter; padding-left: $gutter; }
-  @include breakpoint('large')  { $gutter: $grid-gutters-large / 2;padding-right: $gutter; padding-left: $gutter; }
-  @include breakpoint('xlarge') { $gutter: $grid-gutters-xlarge / 2;padding-right: $gutter; padding-left: $gutter; }
+  @include breakpoint('xsmall') { $gutter: math.div($grid-gutters-xsmall, 2);padding-right: $gutter; padding-left: $gutter; }
+  @include breakpoint('small')  { $gutter: math.div($grid-gutters-small, 2);padding-right: $gutter; padding-left: $gutter; }
+  @include breakpoint('medium') { $gutter: math.div($grid-gutters-medium, 2);padding-right: $gutter; padding-left: $gutter; }
+  @include breakpoint('large')  { $gutter: math.div($grid-gutters-large, 2);padding-right: $gutter; padding-left: $gutter; }
+  @include breakpoint('xlarge') { $gutter: math.div($grid-gutters-xlarge, 2);padding-right: $gutter; padding-left: $gutter; }
 
   width: 100%;
   margin-right: auto;
@@ -123,8 +125,8 @@ $grid-columns-xlarge: 12 !default;
   $total-gutters: ($column-width) * ($gutters * 2);
 
   @include breakpoint($breakpoint) {
-    padding-left: $gutters / 2;
-    padding-right: $gutters / 2;
+    padding-left: math.div($gutters, 2);
+    padding-right: math.div($gutters, 2);
     flex: 0 0 calc(100% * (#{$cols} / #{$column-width}));
     max-width: calc(100% * (#{$cols} / #{$column-width}));
   }
