@@ -34,12 +34,12 @@
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-zip": "^4.2.0",
-    "webpack": "^3.11.0",
-    "webpack-stream": "^4.0.2"
+    "webpack": "^5.91.0",
+    "webpack-stream": "^7.0.0"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "del": "^5.0.0"
+    "del": "^7.0.0"
   },
   "browserslist": [
     "defaults",

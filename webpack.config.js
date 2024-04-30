@@ -74,10 +74,10 @@ module.exports = {
     /**
      * Uglify the output, but still generate a sitemap
      */
-    new webpack.optimize.UglifyJsPlugin({
-      parallel: true,
-      sourceMap: true
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   parallel: true,
+    //   sourceMap: true
+    // }),
   ],
 
   /**
