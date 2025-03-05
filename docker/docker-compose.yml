@@ -4,7 +4,7 @@ version: "3"
 services:
 
   database:
-    container_name: drupal-db
+    container_name: sleepy-db
     build:
       context: ./database
     environment:
@@ -21,7 +21,7 @@ services:
       - ./logs/mysql:/var/log/mysql
 
   php-fpm:
-    container_name: drupal-php
+    container_name: sleepy-php
     build:
       context: ./php-fpm
     depends_on:
@@ -38,7 +38,7 @@ services:
       - ./logs/php:/var/log
 
   nginx:
-    container_name: drupal-web
+    container_name: sleepy-web
     depends_on:
       - php-fpm
     build:
