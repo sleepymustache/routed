@@ -1,25 +1,26 @@
-mysqldump -uroot -p$MYSQL_ROOT_PASSWORD \
-    --ignore-table=$MYSQL_DATABASE.cache_bootstrap \
-    --ignore-table=$MYSQL_DATABASE.cache_config \
-    --ignore-table=$MYSQL_DATABASE.cache_container \
-    --ignore-table=$MYSQL_DATABASE.cache_data \
-    --ignore-table=$MYSQL_DATABASE.cache_default \
-    --ignore-table=$MYSQL_DATABASE.cache_discovery \
-    --ignore-table=$MYSQL_DATABASE.cache_dynamic_page_cache \
-    --ignore-table=$MYSQL_DATABASE.cache_entity \
-    --ignore-table=$MYSQL_DATABASE.cache_menu \
-    --ignore-table=$MYSQL_DATABASE.cache_page \
-    --ignore-table=$MYSQL_DATABASE.cache_render \
-    --ignore-table=$MYSQL_DATABASE.cache_toolbar \
-    --ignore-table=$MYSQL_DATABASE.sessions \
-    --ignore-table=$MYSQL_DATABASE.watchdog \
-    --ignore-table=$MYSQL_DATABASE.webform_submission \
-    --ignore-table=$MYSQL_DATABASE.webform_submission_data \
-    $MYSQL_DATABASE \
+mariadb-dump -uroot -p$MARIADB_ROOT_PASSWORD \
+    --ignore-table=$MARIADB_DATABASE.cache_bootstrap \
+    --ignore-table=$MARIADB_DATABASE.cache_config \
+    --ignore-table=$MARIADB_DATABASE.cache_container \
+    --ignore-table=$MARIADB_DATABASE.cache_data \
+    --ignore-table=$MARIADB_DATABASE.cache_default \
+    --ignore-table=$MARIADB_DATABASE.cache_discovery \
+    --ignore-table=$MARIADB_DATABASE.cache_dynamic_page_cache \
+    --ignore-table=$MARIADB_DATABASE.cache_entity \
+    --ignore-table=$MARIADB_DATABASE.cache_menu \
+    --ignore-table=$MARIADB_DATABASE.cache_page \
+    --ignore-table=$MARIADB_DATABASE.cache_render \
+    --ignore-table=$MARIADB_DATABASE.cache_toolbar \
+    --ignore-table=$MARIADB_DATABASE.sessions \
+    --ignore-table=$MARIADB_DATABASE.oauth2_token \
+    --ignore-table=$MARIADB_DATABASE.oauth2_token__scopes \
+    --ignore-table=$MARIADB_DATABASE.webform_submission \
+    --ignore-table=$MARIADB_DATABASE.webform_submission_data \
+    $MARIADB_DATABASE \
     > /docker-entrypoint-initdb.d/init.sql
 
-mysqldump --no-data -uroot \
-    -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE \
+mariadb-dump --no-data -uroot \
+    -p$MARIADB_ROOT_PASSWORD $MARIADB_DATABASE \
     cache_bootstrap \
     cache_config \
     cache_container \
@@ -33,11 +34,13 @@ mysqldump --no-data -uroot \
     cache_render \
     cache_toolbar \
     sessions \
-    watchdog \
     >> /docker-entrypoint-initdb.d/init.sql
 
-mysqldump --no-data --skip-add-drop-table \
-    -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE \
+
+mariadb-dump --no-data --skip-add-drop-table \
+    -uroot -p$MARIADB_ROOT_PASSWORD $MARIADB_DATABASE \
+    oauth2_token \
+    oauth2_token__scopes \
     webform_submission \
     webform_submission_data \
     >> /docker-entrypoint-initdb.d/init.sql
@@ -46,5 +49,13 @@ sed 's/^CREATE TABLE /CREATE TABLE IF NOT EXISTS /' \
     "/docker-entrypoint-initdb.d/init.sql" \
     > "/docker-entrypoint-initdb.d/init-fixed.sql"
 
-cat /docker-entrypoint-initdb.d/init-fixed.sql \
+sed 's/\/\*M!999999\\- enable the sandbox mode \*\///g' \
+    "/docker-entrypoint-initdb.d/init-fixed.sql" \
+    > "/docker-entrypoint-initdb.d/init-fixed2.sql"
+
+sed 's/utf8mb4_uca1400_ai_ci/utf8mb4_unicode_ci/g' \
+    "/docker-entrypoint-initdb.d/init-fixed2.sql" \
+    > "/docker-entrypoint-initdb.d/init-fixed3.sql"
+
+cat /docker-entrypoint-initdb.d/init-fixed3.sql \
     > /docker-entrypoint-initdb.d/init.sql

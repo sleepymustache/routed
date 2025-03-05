@@ -1,6 +1,6 @@
 # docker/php-fpm/Dockerfile
 
-FROM php:7.4-fpm-alpine
+FROM php:8.1-fpm
 
 WORKDIR /var/www
 
@@ -11,27 +11,22 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10"
 
 # Initialize
-# RUN apk update && apk upgrade
-
-# Install dependencies and git
-# RUN apk add --no-cache freetype-dev libpng-dev libjpeg-turbo-dev git
+RUN apt-get update && apt-get install -y unzip libpng-dev libjpeg-dev git libfreetype-dev libwebp-dev
 
 # PHP Extension Install
-# RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-# RUN docker-php-ext-install opcache pdo_mysql gd
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
+RUN docker-php-ext-install opcache pdo_mysql gd
 
 # Install composer
-# COPY --from=composer /usr/bin/composer /usr/bin/composer
-
-# Configure Environment
-# RUN chmod -R a+w /var/www/web/sites/default/files/
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Clean APK Cache
 RUN rm -rf /var/cache/apk/*
+
+# Configure Environment
+# RUN chmod -R a+w /var/www/web/sites/default/files/private
 
 # Entrypoint
 CMD ["php-fpm"]
 
 EXPOSE 9000
-EXPOSE 3000
-EXPOSE 3001
