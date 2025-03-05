@@ -13,16 +13,38 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sleepy/bootstrap.php';
 
+use \Sleepy\Core\Debug;
 use \Sleepy\MVC\Router;
 use \Sleepy\MVC\RouteNotFound;
+
+Router::route('/some-page/some-sub-pages/', function ($route) {
+    Debug::out("test");
+    Router::redirect('some-page', 'page');
+});
 
 // basic routing with defaults
 Router::mvc(
     [
-        '{{ controller }}/{{ action }}/{{ id }}',
-        '{{ controller }}/{{ action }}',
-        '{{ controller }}',
+        '/todo/{{ action }}/{{ id }}',
+        '/todo/{{ action }}',
+        '/todo/'
+    ], [
+        'controller' => 'todo',
+        'action' => 'index',
+        'id' => null
+    ]
+);
+
+// basic routing with defaults
+Router::mvc(
+    [
+        '/{{ action }}/{{ id }}',
+        '/{{ action }}',
         '/'
+    ], [
+        'controller' => 'home',
+        'action' => 'index',
+        'id' => null
     ]
 );
 

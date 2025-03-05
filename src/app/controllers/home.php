@@ -51,6 +51,27 @@ class Home extends Controller
     }
 
     /**
+     * Loads the view based on controller-action.php pattern
+     *
+     * @param Route $route The route
+     *
+     * @return View
+     */
+    public function test(Route $route) : View
+    {
+        // Getting route info
+        $controller = $route->params["controller"];
+        $action     = $route->params["action"];
+        $id         = $route->params["id"];
+        $view       = "{$controller}-{$action}";
+
+        // Render the page using the homepage template and the content stored
+        // inside of the Homepage Model
+        return new View(new \Model\Test(), "homepage");
+    }
+
+
+    /**
      * Page not found
      *
      * @param Route $route The route
