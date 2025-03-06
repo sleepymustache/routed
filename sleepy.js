@@ -66,6 +66,7 @@ class Module {
   add() {
     // ignore if dependencies already was installed
     if (this.installed) {
+      console.log('Module already installed');
       return;
     }
 
@@ -73,7 +74,7 @@ class Module {
       'submodule',
       'add',
       this.obj.url,
-      'src/app/modules/' + this.name.replace(' ', '-').toLowerCase()
+      'src/app/modules/' + this.name.replace(/ /ig, '-').toLowerCase()
     ], {
       shell: true
     });
