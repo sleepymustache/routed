@@ -1,3 +1,4 @@
+const { rimraf } = require('rimraf');
 const { dest, parallel, series, src, watch } = require('gulp');
 
 // Configuration
@@ -44,14 +45,28 @@ const handleErrors = (err) => {
  * Handles the deleting of watched files
  * @param {object} event
  */
-const fileDeleter = (event) => {
-  const del = require('del');
+const fileDeleter = (file, stats) => {
+  console.log(stats);
+  console.dir(file);
   const path = require('path');
 
-  if (event.type === 'deleted') {
-    const filePathFromSrc = path.relative(path.resolve(baseDir), event.path);
+  if (
+    file === 'unlinkDir'
+  ) {
+    const filePathFromSrc = path.relative(path.resolve(baseDir), file);
     const destFilePath = path.resolve(buildFolder, filePathFromSrc);
-    del.sync(destFilePath);
+    console.log(filePathFromSrc, destFilePath);
+    //rimraf(destFilePath, { force: true });
+  }
+
+  if (
+    file === 'unlink' || 
+    file === 'change'
+  ) {
+    const filePathFromSrc = path.relative(path.resolve(baseDir), file);
+    const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+    console.log(filePathFromSrc, destFilePath);
+    //rimraf.sync(destFilePath);
   }
 };
 
@@ -166,8 +181,45 @@ const develop = parallel(sync, build, () => {
     '!' + jsFiles
   ], { dot: true }, copy);
 
-  copyWatcher.on('change',  fileDeleter);
-  imageWatcher.on('change', fileDeleter);
+  copyWatcher.on('all',  function (file, stats) {
+    const path = require('path');
+
+    if (
+      file === 'unlinkDir'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf(destFilePath, { force: true });
+    }
+
+    if (
+      file === 'unlink'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf.sync(destFilePath);
+    }
+  });
+
+  imageWatcher.on('all',  function (file, stats) {
+    const path = require('path');
+
+    if (
+      file === 'unlinkDir'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf(destFilePath, { force: true });
+    }
+
+    if (
+      file === 'unlink'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf.sync(destFilePath);
+    }
+  });
 });
 
 /**
