@@ -17,3 +17,6 @@
 [submodule "src/app/modules/sitemap"]
 	path = src/app/modules/sitemap
 	url = https://github.com/sleepymustache/module-sitemap
+[submodule "src/app/modules/url-class"]
+	path = src/app/modules/url-class
+	url = https://github.com/sleepymustache/module-urlclass.git
