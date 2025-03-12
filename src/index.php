@@ -17,24 +17,6 @@ use \Sleepy\Core\Debug;
 use \Sleepy\MVC\Router;
 use \Sleepy\MVC\RouteNotFound;
 
-Router::route('/some-page/some-sub-pages/', function ($route) {
-    Debug::out("test");
-    Router::redirect('some-page', 'page');
-});
-
-// basic routing with defaults
-Router::mvc(
-    [
-        '/todo/{{ action }}/{{ id }}',
-        '/todo/{{ action }}',
-        '/todo/'
-    ], [
-        'controller' => 'todo',
-        'action' => 'index',
-        'id' => null
-    ]
-);
-
 // basic routing with defaults
 Router::mvc(
     [

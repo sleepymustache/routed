@@ -51,11 +51,11 @@ class TemplateTest extends TestCase
         $t = new Template();
         $t->directory = dirname(__FILE__) . '/assets/templates/';
         $t->setTemplate('bind');
-        $t->bind('   naMe ', 'Sleepy Mustache!');
+        $t->bind('   naMe ', 'Sleepy Mustache!!');
         ob_start();
         $t->show();
         $name = ob_get_clean();
-        $this->assertEquals($name, 'Sleepy Mustache!');
+        $this->assertEquals($name, 'Sleepy Mustache!!');
     }
 
     /**

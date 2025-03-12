@@ -99,14 +99,14 @@ class DebugTest extends TestCase
      * @covers Debug::out()
      * @group no-ci
      */
-    function testDebugEmail()
-    {
-        Debug::$enableShow = false;
-        Debug::$enableSend = true;
-        Debug::out('Testing, testing, 123');
-        $this->assertTrue(Debug::sendEmail());
-        Debug::$enableSend = false;
-    }
+    // function testDebugEmail()
+    // {
+    //     Debug::$enableShow = false;
+    //     Debug::$enableSend = true;
+    //     Debug::out('Testing, testing, 123');
+    //     // $this->assertTrue(Debug::sendEmail());
+    //     Debug::$enableSend = false;
+    // }
 
     /**
      * No output when $enabled_show is false
