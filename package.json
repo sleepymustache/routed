@@ -8,17 +8,17 @@
     "node": ">= 14.00"
   },
   "scripts": {
+    "start:app": "npm run compose:docker && npm run install:app",
+    "stop:app": "npm run config:export:drush && npm run clear-cache:drush && npm run save:database && docker-compose -f \"./docker/docker-compose.yml\" down",
+    "save:database": "docker exec sleepy-db /bin/sh /dump-db.sh",
+    "compose:docker": "docker-compose -f \"./docker/docker-compose.yml\" up -d --build",
+    "install:app": "docker exec sleepy-php /bin/sh /setup.sh",
     "init": "git submodule init && git submodule update",
     "build": "npm run init && node ./node_modules/gulp/bin/gulp.js build",
     "develop": "npm run start:app",
     "zip": "npm run build && node ./node_modules/gulp/bin/gulp.js zip",
     "cleanup": "npm run build && node ./node_modules/gulp/bin/gulp.js cleanup",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:app": "npm run compose:docker && npm run install:app",
-    "stop:app": "npm run config:export:drush && npm run clear-cache:drush && npm run save:database && docker-compose -f \"./docker/docker-compose.yml\" down",
-    "save:database": "docker exec sleepy-db /bin/sh /dump-db.sh",
-    "compose:docker": "docker-compose -f \"./docker/docker-compose.yml\" up -d --build",
-    "install:app": "docker exec sleepy-php /bin/sh /setup.sh"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

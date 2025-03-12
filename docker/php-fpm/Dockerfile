@@ -17,14 +17,13 @@ RUN apt-get update && apt-get install -y unzip libpng-dev libjpeg-dev git libfre
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 RUN docker-php-ext-install opcache pdo_mysql gd
 
+RUN pecl install xdebug && docker-php-ext-enable xdebug 
+
 # Install composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Clean APK Cache
 RUN rm -rf /var/cache/apk/*
-
-# Configure Environment
-# RUN chmod -R a+w /var/www/web/sites/default/files/private
 
 # Entrypoint
 CMD ["php-fpm"]
