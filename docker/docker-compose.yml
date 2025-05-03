@@ -1,0 +1,61 @@
+# docker/docker-compose.yml
+version: "3"
+
+services:
+
+  database:
+    container_name: sleepy-db
+    build:
+      context: ./database
+    environment:
+      - MARIADB_DATABASE=${DBNAME}
+      - MARIADB_USER=${DBUSER}
+      - MARIADB_PASSWORD=${DBPASS}
+      - MARIADB_ROOT_PASSWORD=${DBROOT}
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./scripts/dump-db.sh:/dump-db.sh
+      - ./database/data:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+
+  php-fpm:
+    container_name: sleepy-php
+    build:
+      context: ./php-fpm
+    depends_on:
+      - database
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=mysql://${DBUSER}:${DBPASS}@database:3306/${DBNAME}?serverVersion=5.7
+    volumes:
+      - ../:/var/www
+      # - .env:/var/www/.env
+      - ./php-fpm/conf.d:/usr/local/etc/php/conf.d
+      - ./scripts/setup.sh:/setup.sh
+      - ./logs/php:/var/log
+    ports:
+      - 9000:9000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  nginx:
+    container_name: sleepy-web
+    depends_on:
+      - php-fpm
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      # - ./.env:/var/www/web/.env
+      - ../:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
+      - ./scripts/watch-theme.sh:/watch-theme.sh

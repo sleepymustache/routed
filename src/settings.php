@@ -1,81 +1,130 @@
 <?php
-/*******************************************************************************
- * Global settings
- ******************************************************************************/
+/**
+ * Setting File
+ *
+ * PHP version 7.0.0
+ *
+ * @category Settings
+ * @package  Sleepy\Core
+ * @author   Jaime Rodriguez <hi.i.am.jaime@gmail.com>
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @version  GIT: 1.0.0
+ * @link     http://sleepymustache.com
+ */
+
+use Sleepy\Core\Debug;
+use Sleepy\Core\SM;
 
 // Comma separated URLs that define the environments
-define('LIVE_URL',  '');
-define('STAGE_URL', '');
+SM::$live_urls  = [ 'example.com' ];
+SM::$stage_urls = [ 'stage.example.com' ];
 
 // Server dependant variables (Dev/Stage/Live)
-if (\Sleepy\SM::isENV(STAGE_URL)) {
-  define("ENV", "STAGE");
+if (SM::isStage()) {
 
-  // Base Directory/URL
-  define("URLBASE", "/");
-  define("DIRBASE", $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR .'app');
+    // Base Directory/URL
+    define('URLBASE', '/');
+    define('DIRBASE', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'app');
 
-  // DB Credentials
-  define ("DBHOST", "");
-  define ("DBUSER", "");
-  define ("DBPASS", "");
-  define ("DBNAME", "");
+    // DB Credentials
+    define("DBHOST", '');
+    define("DBUSER", '');
+    define("DBPASS", '');
+    define("DBNAME", '');
 
-  // Email information
-  define('EMAIL_FROM', "");
-  define('EMAIL_TO',   "");
-  define('EMAIL_CC',   "");
-  define('EMAIL_BCC',  "");
+    // Email information
+    define('EMAIL_FROM', '');
+    define('EMAIL_TO',   '');
+    define('EMAIL_CC',   '');
+    define('EMAIL_BCC',  '');
 
-  // Analytics
-  define('GA_ACCOUNT', "");
-} elseif (\Sleepy\SM::isENV(LIVE_URL)) {
-  define("ENV", "LIVE");
+    // Analytics
+    define('GA_ACCOUNT', '');
 
-  // Base Directory/URL
-  define("URLBASE", "/");
-  define("DIRBASE", $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR .'app');
+    // Set Debugging
+    Debug::$enableShow    = false;   // Show debug info on screen
+    Debug::$enableSend    = false;   // Send debug info via email
+    Debug::$enableLog     = false;   // Log debug info to a db
+    Debug::$enableConsole = false;   // Show debug info in the console
 
-  // DB Credentials
-  define ("DBHOST", "");
-  define ("DBUSER", "");
-  define ("DBPASS", "");
-  define ("DBNAME", "");
+} elseif (SM::isLive()) {
 
-  // Email information
-  define('EMAIL_FROM', "");
-  define('EMAIL_TO',   "");
-  define('EMAIL_CC',   "");
-  define('EMAIL_BCC',  "");
+    // Base Directory/URL
+    define('URLBASE', '/');
+    define('DIRBASE', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'app');
 
-  // Analytics
-  define('GA_ACCOUNT', "");
+    // DB Credentials
+    define("DBHOST", '');
+    define("DBUSER", '');
+    define("DBPASS", '');
+    define("DBNAME", '');
+
+    // Email information
+    define('EMAIL_FROM', '');
+    define('EMAIL_TO',   '');
+    define('EMAIL_CC',   '');
+    define('EMAIL_BCC',  '');
+
+    // Analytics
+    define('GA_ACCOUNT', '');
+
+    // Set Debugging
+    Debug::$enableShow    = false;   // Show debug info on screen
+    Debug::$enableSend    = false;   // Send debug info via email
+    Debug::$enableLog     = false;   // Log debug info to a db
+    Debug::$enableConsole = false;   // Show debug info in the console
+
 } else {
-  define("ENV", "DEV");
 
-  // Base Directory/URL
-  define("URLBASE", "/");
-  define("DIRBASE", $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR .'app');
+    // Base Directory/URL
+    define('URLBASE', '/');
+    define('DIRBASE', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'app');
 
-  // DB Credentials
-  define ("DBHOST", "");
-  define ("DBUSER", "");
-  define ("DBPASS", "");
-  define ("DBNAME", "");
+    // DB Credentials
+    define("DBHOST", 'db');
+    define("DBUSER", 'sleepy');
+    define("DBPASS", 'sleepy');
+    define("DBNAME", 'sleepy');
 
-  // Email information
-  define('EMAIL_FROM', "");
-  define('EMAIL_TO',   "");
-  define('EMAIL_CC',   "");
-  define('EMAIL_BCC',  "");
+    // Email information
+    define('EMAIL_FROM', 'me@example.com');
+    define('EMAIL_TO',   'you@example.com');
+    define('EMAIL_CC',   '');
+    define('EMAIL_BCC',  '');
 
-  // Analytics
-  define('GA_ACCOUNT', "");
+    // Analytics
+    define('GA_ACCOUNT', '');
+
+    // Set Debugging
+    Debug::$enableShow    = false;   // Show debug info on screen
+    Debug::$enableSend    = false;   // Send debug info via email
+    Debug::$enableLog     = false;   // Log debug info to a db
+    Debug::$enableConsole = true;    // Show debug info in the console
 }
 
-// Set Debugging
-if (class_exists('\Sleepy\Debug')) {
-  \Sleepy\Debug::$enable_show = true;		// Show debug info on screen
-  \Sleepy\Debug::$enable_send = false;	// Send debug info via email
-  \Sleepy\Debug::$enable_log  = false;	// Log debug info to a db
-}
+// Define a sitemap for use with the Navigation Module
+define('SITEMAP', '{
+  "pages": [
+    {
+      "id": "1.0",
+      "link": "/",
+      "title": "Homepage",
+      "pages": [
+        {
+          "id": "1.1",
+          "title": "Link 1",
+          "target": "",
+          "link": "#link1"
+        }, {
+          "id": "1.2",
+          "title": "Link 2",
+          "link": "#link2"
+        }, {
+          "id": "1.3",
+          "title": "Link 3",
+          "link": "#link3"
+        }
+      ]
+    }
+  ]
+}');

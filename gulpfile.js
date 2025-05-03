@@ -1,17 +1,19 @@
+const { rimraf } = require('rimraf');
+const { dest, parallel, series, src, watch } = require('gulp');
+
+// Configuration
+const devUrl      = 'http://localhost:8888'; // The local development URL for BrowserSync
+const enableTests = false;                   // Set to false for production
+
 // Gulp plugins
 const browserSync = require('browser-sync').create();
 const eslint      = require('gulp-eslint');
-const gulp        = require('gulp');
 const imagemin    = require('gulp-imagemin');
-const notify      = require('gulp-notify');
 const plumber     = require('gulp-plumber');
-const sass        = require('gulp-sass');
+const sass        = require('gulp-sass')(require('sass'))
 const sourcemaps  = require('gulp-sourcemaps');
 const webpack     = require('webpack-stream');
 const zip         = require('gulp-zip');
-
-// The dev URL for browserSync
-const devUrl      = 'http://routed.local.com';
 
 // Source Folders
 const baseDir     = 'src';
@@ -34,162 +36,199 @@ const state = {
 /**
  * Handles errors with notifications
  */
-const handleErrors = function () {
-  const args = Array.prototype.slice.call(arguments);
-
-  notify.onError({
-    title:   '<%= error.name %>',
-    message: '<%= error.message %>'
-  }).apply(this, args);
+const handleErrors = (err) => {
+  console.dir(err);
+  return false;
 };
 
 /**
  * Handles the deleting of watched files
  * @param {object} event
  */
-const fileDeleter = function (event) {
-  const del = require('del');
+const fileDeleter = (file, stats) => {
+  console.log(stats);
+  console.dir(file);
   const path = require('path');
 
-  if (event.type === 'deleted') {
-    const filePathFromSrc = path.relative(path.resolve(baseDir), event.path);
+  if (
+    file === 'unlinkDir'
+  ) {
+    const filePathFromSrc = path.relative(path.resolve(baseDir), file);
     const destFilePath = path.resolve(buildFolder, filePathFromSrc);
-    del.sync(destFilePath);
+    console.log(filePathFromSrc, destFilePath);
+    //rimraf(destFilePath, { force: true });
+  }
+
+  if (
+    file === 'unlink' || 
+    file === 'change'
+  ) {
+    const filePathFromSrc = path.relative(path.resolve(baseDir), file);
+    const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+    console.log(filePathFromSrc, destFilePath);
+    //rimraf.sync(destFilePath);
   }
 };
 
 /**
  * Lints the source
  */
-gulp.task('eslint', function () {
+const lint = () => {
   state.shouldMinify = true;
 
-  return gulp.src([jsFiles])
+  return src([jsFiles])
     .pipe(eslint())
     .pipe(plumber())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-    .on('error', notify.onError((args) => {
+    .on('error', (err) => {
       state.shouldMinify = false;
-      return handleErrors(args);
-    }));
-});
-
-/**
- * Runs by default
- */
-gulp.task('default', [
-  'scripts',
-  'copy',
-  'images',
-  'styles'
-], () => {
-  browserSync.init({
-    proxy: devUrl,
-    notify: false
-  });
-});
-
-/**
- * Runs by default
- */
-gulp.task('build', [
-  'scripts',
-  'copy',
-  'images',
-  'styles'
-]);
+      return handleErrors(err);
+    });
+};
 
 /**
  * Compresses image files for production
  */
-gulp.task('images', () => {
-  gulp.src(imageFiles)
-    .pipe(plumber({errorHandler: handleErrors}))
+const images = () => {
+  return src(imageFiles)
+    .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(imagemin())
-    .pipe(gulp.dest(buildImageFolder))
+    .pipe(dest(buildImageFolder))
     .pipe(browserSync.stream());
-});
+};
 
 /**
  * Minifies JS files for production
  */
-gulp.task('scripts', ['eslint'], () => {
-  if (!state.shouldMinify) return gulp;
+const scripts = series(lint, (cb) => {
+  if (!state.shouldMinify) return cb;
 
-  return gulp.src(baseDir + '/js/main.js')
-    .pipe(plumber({errorHandler: handleErrors}))
+  return src(baseDir + '/js/main.js')
+    .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest(buildJsFolder))
+    .pipe(dest(buildJsFolder))
     .pipe(browserSync.stream());
 });
 
 /**
  * Compiles SCSS to CSS and minifies CSS
  */
-gulp.task('styles', () => {
-  gulp.src(sassFiles)
-    .pipe(plumber({errorHandler: handleErrors}))
+const styles = () => {
+  return src(sassFiles)
+    .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(sass({
-      outputStyle: 'compressed'
-    }))
+    .pipe(sass().on('error', sass.logError))
     .pipe(sourcemaps.write('./', {
       includeContent: true,
       sourceRoot: './'
     }))
-    .pipe(gulp.dest(buildCssFolder))
-    .pipe(browserSync.stream());
-});
+    .pipe(dest(buildCssFolder))
+    .pipe(browserSync.stream({ watch: '**/*.css' }));
+};
 
 /**
  * Copy the html files to the build directory
  */
-gulp.task('copy', function () {
-  return gulp.src([
-    baseDir + '/**',
-    '!' + sassFiles,
-    '!' + imageFiles,
-    '!' + jsFiles,
-    '!' + baseDir + '/app/tests/**'
-  ], { nodir: true, dot: true })
-    .pipe(plumber({errorHandler: handleErrors}))
-    .pipe(gulp.dest(buildFolder))
-    .pipe(browserSync.stream());
-});
-
-/**
- * Watches for changes in files and does stuff
- */
-gulp.task('watch', ['copy', 'images', 'styles', 'scripts'], () => {
-  const imageWatcher = gulp.watch([imageFiles], ['images']);
-  const copyWatcher = gulp.watch([
+const copy = () => {
+  var files = [
     baseDir + '/**',
     '!' + sassFiles,
     '!' + imageFiles,
     '!' + jsFiles
-  ], { dot: true }, ['copy']);
+  ];
 
-  gulp.watch([jsFiles], ['scripts']);
-  gulp.watch([sassFiles],  ['styles']);
+  if (!enableTests) {
+    files.push('!' + baseDir + '/app/tests/**');
+  }
 
-  copyWatcher.on('change', fileDeleter);
-  imageWatcher.on('change', fileDeleter);
+  return src(files, { nodir: true, dot: true })
+    .pipe(plumber({errorHandler: handleErrors}))
+    .pipe(dest(buildFolder))
+    .pipe(browserSync.stream());
+};
 
+/**
+ * Starts up browserSync
+ */
+const sync = () => {
   browserSync.init({
     proxy: devUrl,
     notify: false
   });
+};
+
+/**
+ * Builds the app
+ */
+const build = series((cb) => {
+  cb();
+}, parallel(copy, images, styles, scripts));
+
+const cleanup = (cb) => { cb(); };
+
+/**
+ * Watches for changes in files and does stuffF
+ */
+const develop = parallel(sync, build, () => {
+  watch([jsFiles], scripts);
+  watch([sassFiles], styles);
+  const imageWatcher = watch([imageFiles], images);
+  const copyWatcher  = watch([
+    baseDir + '/**',
+    '!' + sassFiles,
+    '!' + imageFiles,
+    '!' + jsFiles
+  ], { dot: true }, copy);
+
+  copyWatcher.on('all',  function (file, stats) {
+    const path = require('path');
+
+    if (
+      file === 'unlinkDir'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf(destFilePath, { force: true });
+    }
+
+    if (
+      file === 'unlink'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf.sync(destFilePath);
+    }
+  });
+
+  imageWatcher.on('all',  function (file, stats) {
+    const path = require('path');
+
+    if (
+      file === 'unlinkDir'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf(destFilePath, { force: true });
+    }
+
+    if (
+      file === 'unlink'
+    ) {
+      const filePathFromSrc = path.relative(path.resolve(baseDir), stats);
+      const destFilePath = path.resolve(buildFolder, filePathFromSrc);
+      rimraf.sync(destFilePath);
+    }
+  });
 });
 
-gulp.task('cleanup', [], function () {
-
-});
-
-gulp.task('zip', ['copy', 'images', 'styles', 'scripts'], () => {
+/**
+ * Zips up the dist folder
+ */
+const packUp = series(build, () => {
   var today = new Date();
 
-  gulp.src('dist/**/*')
+  return src('dist/**/*')
     .pipe(zip(
       today.getFullYear().toString() + '-' +
       today.getMonth().toString() + '-' +
@@ -198,5 +237,12 @@ gulp.task('zip', ['copy', 'images', 'styles', 'scripts'], () => {
       today.getMinutes().toString() +
       '-dist.zip'
     ))
-    .pipe(gulp.dest('./'));
+    .pipe(dest('./'));
 });
+
+exports.cleanup = cleanup;
+exports.zip     = packUp;
+exports.develop = develop;
+exports.build   = build;
+exports.default = develop;
+exports.copy    = copy;

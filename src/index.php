@@ -1,25 +1,46 @@
 <?php
-// initialize sleepyMUSTACHE
-require_once(__DIR__ . '/app/core/sleepy.php');
+/**
+ * Index Page
+ *
+ * PHP version 7.0.0
+ *
+ * @category Page
+ * @package  Sleepy
+ * @author   Jaime A. Rodriguez <hi.i.am.jaime@gmail.com>
+ * @license  http://opensource.org/licenses/MIT; MIT
+ * @link     https://sleepymustache.com
+ */
 
-use \Sleepy\Router;
-use \Sleepy\RouteNotFound;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sleepy/bootstrap.php';
+
+use \Sleepy\Core\Debug;
+use \Sleepy\MVC\Router;
+use \Sleepy\MVC\RouteNotFound;
 
 // basic routing with defaults
-Router::mvc([
-  '{{ controller }}/{{ action }}/{{ id }}',
-  '{{ controller }}/{{ action }}',
-  '{{ controller }}',
-  '/'
-]);
+Router::mvc(
+    [
+        '/{{ action }}/{{ id }}',
+        '/{{ action }}',
+        '/'
+    ], [
+        'controller' => 'home',
+        'action' => 'index',
+        'id' => null
+    ]
+);
 
 // Catch 404 or errors
 try {
-  Router::start();
+    Router::start();
 } catch (RouteNotFound $e) {
-  Router::redirect('home', 'pageNotFound');
+    Router::redirect('home', 'pageNotFound');
 } catch (Exception $e) {
-  Router::redirect('home', 'error', array(
-    'error' => $e
-  ));
+    Router::redirect(
+        'home',
+        'error',
+        [
+            'error' => $e
+        ]
+    );
 }
